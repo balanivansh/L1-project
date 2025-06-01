@@ -36,44 +36,11 @@ book-scraper/
 │
 ├── books.ipynb          # Jupyter notebook containing the scraping logic
 ├── README.md            # Project documentation
-└── requirements.txt     # (Optional) Python dependencies
+└── books_details.csv    # output csv file
 ```
 
 ---
 
-## 🚀 Getting Started
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/yourusername/book-scraper.git
-cd book-scraper
-```
-
-### 2. Set up your environment
-
-Install required libraries:
-
-```bash
-pip install requests beautifulsoup4
-```
-
-
-### 3. Run the notebook
-
-Use Jupyter Notebook:
-
-```bash
-jupyter notebook books.ipynb
-```
-
-Or use JupyterLab:
-
-```bash
-jupyter lab books.ipynb
-```
-
----
 
 ## 🧪 Sample Output
 
