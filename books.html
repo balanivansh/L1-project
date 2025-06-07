@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books Scraper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f7f7f7;
+        }
+        .search-bar {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #aaa;
+        }
+        .book-list {
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            max-width: 400px;
+            display: none;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        .book-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .book-list li {
+            padding: 12px 20px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .book-list li:hover {
+            background: #f0f0f0;
+        }
+        .book-details {
+            margin-top: 40px;
+            max-width: 600px;
+            display: none;
+        }
+        .book-details table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .book-details th, .book-details td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+        .book-details th {
+            background: #f2f2f2;
+            width: 180px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Books Scraper</h1>
+    <input class="search-bar" type="text" placeholder="Click to show books" id="searchBar" />
+
+    <div class="book-list" id="bookList">
+        <ul id="booksUl"></ul>
+    </div>
+
+    <div class="book-details" id="bookDetails">
+        <h2 id="bookTitle"></h2>
+        <table>
+            <tr><th>Price</th><td id="bookPrice"></td></tr>
+            <tr><th>Stars</th><td id="bookStars"></td></tr>
+            <tr><th>Availability</th><td id="bookAvailability"></td></tr>
+            <tr><th>Description</th><td id="bookDescription"></td></tr>
+            <tr><th>Product Link</th><td id="bookLink"></td></tr>
+        </table>
+    </div>
+
+    <script>
+        let books = [];
+
+        fetch('book_details.json')
+            .then(response => response.json())
+            .then(data => {
+                books = data;
+            });
+
+        const searchBar = document.getElementById('searchBar');
+        const bookList = document.getElementById('bookList');
+        const booksUl = document.getElementById('booksUl');
+        const bookDetails = document.getElementById('bookDetails');
+
+        searchBar.addEventListener('click', () => {
+            bookList.style.display = 'block';
+            bookDetails.style.display = 'none';
+            booksUl.innerHTML = '';
+            books.forEach((book, bookIndex) => {
+                const li = document.createElement('li');
+                li.textContent = book.title;
+                li.onclick = () => BookDetails(bookIndex);
+                booksUl.appendChild(li);
+            });
+        });
+
+        function BookDetails(bookIndex) {
+            const book = books[bookIndex];
+            document.getElementById('bookTitle').textContent = book.title;
+            document.getElementById('bookPrice').textContent = book.price;
+            document.getElementById('bookStars').textContent = book.stars;
+            document.getElementById('bookAvailability').textContent = book.availability;
+            document.getElementById('bookDescription').textContent = book.description;
+            document.getElementById('bookLink').innerHTML = `<a href="${book.product_link}" target="_blank">View Product</a>`;
+            bookDetails.style.display = 'block';
+            bookList.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
